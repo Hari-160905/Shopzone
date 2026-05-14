@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8"> 
+       <title>website</title>
+     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
+    <link rel="stylesheet" href="./style.css"/>
+</head>
+<body>
+    <h1> THE SHOP ZONE</h1>
+    <nav>
+   <a href="/home">Home</a>
+    <a href="/trending">Trending</a>
+     <a href="/services">Services</a>
+      <a href="/contact">Contact</a>
+      <a href="/cart">Cart (<span id="cart-count">0</span>)</a>
+    </nav>
+    <div class ="headlines">
+        <h2>Welcome to the toppest online shopping site</h2>
+        <p>here you can buy /sell the products you want</p>
+        <img src="https://www.shutterstock.com/image-photo/online-ecommerce-website-store-shopping-260nw-2460502435.jpg" alt="heading image"/>
+    </div>
+    <h2 style="text-align: left; margin-top: 30px; margin-left: 20px; text-transform: uppercase;">Products</h2>
+   <div class="container" id="product-list">
+    </div>
+
+<script>
+  async function loadTopBuys() {
+    try {
+      console.log('Starting loadTopBuys');
+      const response = await fetch('/api/topbuys');
+      console.log('Response status:', response.status);
+      
+      const data = await response.json();
+      console.log('Data received:', Object.keys(data).length, 'products');
+      
+      const container = document.getElementById('product-list');
+      console.log('Container found:', container !== null);
+      
+      let html = "";
+      for (let id in data) {
+        const item = data[id];
+        const imageUrl = item.images && item.images[0] ? item.images[0] : 'https://via.placeholder.com/250';
+        console.log('Adding product:', item.name, 'with image:', imageUrl);
+        
+        html += '<div class="num">';
+        html += '<h3>' + item.name + '</h3>';
+        html += '<p>price : ₹' + item.price.toFixed(2) + '</p>';
+        html += '<button onclick="location.href=\'product.html?product=' + id + '\'">VIEW</button>';
+        html += '<button onclick="addToCartById(' + id + ')">Add to Cart</button>';
+        html += '<img src="' + imageUrl + '" alt="' + item.name + '" style="width:250px;height:250px;object-fit:cover;border:1px solid red;" />';
+        html += '</div>';
+      }
+      
+      console.log('Setting innerHTML');
+      container.innerHTML = html;
+      console.log('innerHTML set successfully');
+    } catch (error) {
+      console.error('Error:', error);
+      document.getElementById('product-list').innerHTML = '<p>Error loading products: ' + error.message + '</p>';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', loadTopBuys);
+</script>
+  
+    <script src="index.js"></script>
+</body>
+</html>
+
+

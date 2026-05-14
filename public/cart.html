@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
+    <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+    <h1>YOUR CART</h1>
+    <nav>
+        <a href="/home">Home</a>
+        <a href="/trending">Trending</a>
+        <a href="/cart">Cart (<span id="cart-count">0</span>)</a>
+        <a href="/services">Services</a>
+        <a href="/contact">Contact</a>
+    </nav>
+    <div id="cart-items"></div>
+    <h3>Total: ₹<span id="cart-total">0.00</span></h3>
+    <button onclick="checkout()">Checkout</button>
+
+    <script src="index.js"></script>
+    <script>
+        loadCartPage();
+        function checkout() {
+            alert('Proceeding to checkout!');
+        }
+    </script>
+</body>
+</html>
